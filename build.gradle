@@ -1,3 +1,2 @@
-group 'me.vsadokhin'
-version '1.0-SNAPSHOT'
-
+group 'me.vsadokhin.iot'
+version '0.0.1-SNAPSHOT'
