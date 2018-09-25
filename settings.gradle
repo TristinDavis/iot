@@ -1,3 +1,4 @@
 rootProject.name = 'iot'
 
-include ':data'
+include ':data',
+        ':receive-api'

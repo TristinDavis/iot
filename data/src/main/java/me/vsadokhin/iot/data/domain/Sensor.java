@@ -13,6 +13,9 @@ public class Sensor {
     @Column
     private double value;
 
+    public Sensor() {
+    }
+
     public Sensor(long created, String name, double value) {
         id = new SensorId(created, name);
         this.value = value;
