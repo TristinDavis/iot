@@ -1,11 +1,11 @@
 #!/bin/bash
-docker rm -f cassandra-iot
+docker rm -f iot-cassandra
 startDate=`date +%s`
 echo 'cassandra iot start'
-docker run --rm --name cassandra-iot -d -p 9042:9042 cassandra:3.11.3
+docker run --rm -d --name iot-cassandra -p 9042:9042 cassandra:3.11.3
 while true; do
     sleep 1
-    status=`docker exec cassandra-iot cqlsh 2>&1`
+    status=`docker exec iot-cassandra cqlsh 2>&1`
     if [ -z  "$status" ]; then
         echo 'cassandra iot is started'
         break
@@ -19,9 +19,9 @@ while true; do
 done
 
 echo 'cassandra iot init start'
-docker cp ./init-cassandra cassandra-iot:/tmp
-docker exec cassandra-iot cqlsh --file=/tmp/init-cassandra
-status=`docker exec cassandra-iot cqlsh -e "DESCRIBE TABLE iot.sensor"`
+docker cp ./init-cassandra iot-cassandra:/tmp
+docker exec iot-cassandra cqlsh --file=/tmp/init-cassandra
+status=`docker exec iot-cassandra cqlsh -e "DESCRIBE TABLE iot.sensor"`
 if [[ ${status} == *"CREATE TABLE iot.sensor"* ]]; then
     echo 'cassandra iot init is done'
 else
