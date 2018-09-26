@@ -20,7 +20,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Override
     protected String getContactPoints() {
-        return "localhost";
+        return System.getProperty("cassandra.contact.points","localhost");
     }
 
     @Override

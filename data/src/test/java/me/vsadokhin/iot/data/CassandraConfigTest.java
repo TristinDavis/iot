@@ -23,7 +23,21 @@ public class CassandraConfigTest {
 
     @Test
     public void getContactPoints() {
+        // setup
+        System.clearProperty("cassandra.contact.points");
+
+        // verify
         assertThat(config.getContactPoints(), is("localhost"));
+    }
+
+    @Test
+    public void getContactPoints_() {
+        // setup
+        String customContactPoints = "customCassandraHost1,customCassandraHost2";
+        System.setProperty("cassandra.contact.points", customContactPoints);
+        
+        // verify
+        assertThat(config.getContactPoints(), is(customContactPoints));
     }
 
     @Test
