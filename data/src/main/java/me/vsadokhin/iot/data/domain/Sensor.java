@@ -20,4 +20,20 @@ public class Sensor {
         id = new SensorId(created, name);
         this.value = value;
     }
+
+    public SensorId getId() {
+        return id;
+    }
+
+    public void setId(SensorId id) {
+        this.id = id;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
 }

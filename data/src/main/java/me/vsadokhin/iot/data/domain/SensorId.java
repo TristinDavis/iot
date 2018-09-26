@@ -14,8 +14,27 @@ public class SensorId {
     @PrimaryKeyColumn(type = PARTITIONED)
     private String name;
 
+    public SensorId() {
+    }
+
     public SensorId(long created, String name) {
         this.created = created;
+        this.name = name;
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }
