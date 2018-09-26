@@ -29,6 +29,7 @@ def mockito_version = "1.10.19"
 dependencies {
   compile project(':data')
   compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.springframework.kafka:spring-kafka'
 
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile("org.powermock:powermock-module-junit4:${powermock_version}") {
