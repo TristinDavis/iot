@@ -1,6 +1,6 @@
 #!/bin/bash
 ../gradlew clean bootJar
-docker rm -f iot-receive-api
+docker rm -f iot-receive-api 2>/dev/null
 docker run --rm -d --name iot-receive-api \
 -p 8080:8080 \
 --link iot-kafka:iot-kafka \

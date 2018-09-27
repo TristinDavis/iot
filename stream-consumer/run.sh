@@ -1,6 +1,6 @@
 #!/bin/bash
 ../gradlew clean bootJar
-docker rm -f iot-stream-consumer
+docker rm -f iot-stream-consumer 2>/dev/null
 docker run --rm -d --name iot-stream-consumer \
 --link iot-kafka:iot-kafka \
 --link iot-cassandra:iot-cassandra \

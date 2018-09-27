@@ -1,5 +1,5 @@
 #!/bin/bash
-docker rm -f iot-cassandra
+docker rm -f iot-cassandra 2>/dev/null
 startDate=`date +%s`
 echo 'cassandra iot start'
 docker run --rm -d --name iot-cassandra -p 9042:9042 cassandra:3.11.3
