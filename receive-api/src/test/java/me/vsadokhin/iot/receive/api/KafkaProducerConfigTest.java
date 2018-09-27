@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.Before;
@@ -129,5 +130,18 @@ public class KafkaProducerConfigTest {
         
         // verify
         assertThat(result, is(mockKafkaTemplate));
+    }
+
+    @Test
+    public void producer() throws Exception {
+        // setup
+        KafkaProducer mockKafkaProducer = mock(KafkaProducer.class);
+        whenNew(KafkaProducer.class).withNoArguments().thenReturn(mockKafkaProducer);
+
+        // act
+        KafkaProducer result = kafkaProducerConfig.producer();
+
+        // verify
+        assertThat(result, is(mockKafkaProducer));
     }
 }

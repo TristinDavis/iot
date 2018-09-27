@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -34,5 +35,10 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, Sensor> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
+    }
+
+    @Bean
+    public KafkaProducer producer() {
+        return new KafkaProducer();
     }
 }

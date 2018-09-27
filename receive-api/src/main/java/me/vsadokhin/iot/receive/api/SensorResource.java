@@ -1,10 +1,10 @@
 package me.vsadokhin.iot.receive.api;
 
 import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SensorResource {
 
-    private final KafkaTemplate<String, Sensor> kafkaTemplate;
+    private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public SensorResource(KafkaTemplate<String, Sensor> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+    public SensorResource(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
     }
 
     @PostMapping("/sensor")
     ResponseEntity create(@RequestBody Sensor sensor) {
         // TODO Vasiliy validate
-        kafkaTemplate.send("sensor", sensor);
-   		return new ResponseEntity<>(HttpStatus.CREATED);
-   	}
-   	
+        kafkaProducer.sendAsync("sensor", sensor);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }
