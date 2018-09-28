@@ -10,7 +10,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.domain.Metric;
 import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -110,7 +110,7 @@ public class KafkaProducerConfigTest {
         whenNew(DefaultKafkaProducerFactory.class).withArguments(mockMap).thenReturn(mockDefaultKafkaProducerFactory);
 
         // act
-        ProducerFactory<String, Sensor> result = kafkaProducerConfig.producerFactory();
+        ProducerFactory<String, Metric> result = kafkaProducerConfig.producerFactory();
 
         // verify
         assertThat(result, is(mockDefaultKafkaProducerFactory));
@@ -126,7 +126,7 @@ public class KafkaProducerConfigTest {
         whenNew(KafkaTemplate.class).withArguments(mockProducerFactory).thenReturn(mockKafkaTemplate);
 
         // act
-        KafkaTemplate<String, Sensor> result = kafkaProducerConfig.kafkaTemplate();
+        KafkaTemplate<String, Metric> result = kafkaProducerConfig.kafkaTemplate();
         
         // verify
         assertThat(result, is(mockKafkaTemplate));

@@ -1,6 +1,6 @@
 package me.vsadokhin.iot.receive.api;
 
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.domain.Metric;
 import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SensorResource {
+public class MetricResource {
 
     private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public SensorResource(KafkaProducer kafkaProducer) {
+    public MetricResource(KafkaProducer kafkaProducer) {
         this.kafkaProducer = kafkaProducer;
     }
 
-    @PostMapping("/sensor")
-    ResponseEntity create(@RequestBody Sensor sensor) {
+    @PostMapping("/metric")
+    ResponseEntity create(@RequestBody Metric metric) {
         // TODO Vasiliy validate
-        kafkaProducer.sendAsync("sensor", sensor);
+        kafkaProducer.sendAsync("metric", metric);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

@@ -10,7 +10,7 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.domain.Metric;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,14 +55,14 @@ public class KafkaProducerTest {
     public void sendAsync_callKafkaTemplateSend() {
         // setup
         String topic = "some topic";
-        Sensor mockSensor = mock(Sensor.class);
+        Metric mockMetric = mock(Metric.class);
         when(mockKafkaTemplate.send(anyString(), anyObject())).thenReturn(mock(ListenableFuture.class));
 
         // act
-        kafkaProducer.sendAsync(topic, mockSensor);
+        kafkaProducer.sendAsync(topic, mockMetric);
         
         // verify
-        verify(mockKafkaTemplate).send(topic, mockSensor);
+        verify(mockKafkaTemplate).send(topic, mockMetric);
     }
 
     @SuppressWarnings("unchecked")
@@ -73,7 +73,7 @@ public class KafkaProducerTest {
         when(mockKafkaTemplate.send(anyString(), anyObject())).thenReturn(mockListenableFuture);
 
         // act
-        kafkaProducer.sendAsync("topic", new Sensor());
+        kafkaProducer.sendAsync("topic", new Metric());
 
         // verify
         verify(mockListenableFuture).addCallback(any());
@@ -87,14 +87,14 @@ public class KafkaProducerTest {
         when(mockKafkaTemplate.send(anyString(), anyObject())).thenReturn(mockListenableFuture);
         ArgumentCaptor<ListenableFutureCallback> captor = ArgumentCaptor.forClass(ListenableFutureCallback.class);
         doNothing().when(mockListenableFuture).addCallback(captor.capture());
-        kafkaProducer.sendAsync("topic", new Sensor());
+        kafkaProducer.sendAsync("topic", new Metric());
         SendResult mockSendResult = mock(SendResult.class);
 
         // act
         captor.getValue().onSuccess(mockSendResult);
 
         // verify
-        verify(MOCK_LOGGER).debug("Sensor data is sent: " + mockSendResult);
+        verify(MOCK_LOGGER).debug("Metric data is sent: " + mockSendResult);
     }
 
     @SuppressWarnings("unchecked")
@@ -105,15 +105,15 @@ public class KafkaProducerTest {
         when(mockKafkaTemplate.send(anyString(), anyObject())).thenReturn(mockListenableFuture);
         ArgumentCaptor<ListenableFutureCallback> captor = ArgumentCaptor.forClass(ListenableFutureCallback.class);
         doNothing().when(mockListenableFuture).addCallback(captor.capture());
-        Sensor mockSensor = mock(Sensor.class);
-        kafkaProducer.sendAsync("topic", mockSensor);
+        Metric mockMetric = mock(Metric.class);
+        kafkaProducer.sendAsync("topic", mockMetric);
         Throwable mockThrowable = mock(Throwable.class);
 
         // act
         captor.getValue().onFailure(mockThrowable);
 
         // verify
-        verify(MOCK_LOGGER).error("Failed to sendAsync message: " + mockSensor, mockThrowable);
+        verify(MOCK_LOGGER).error("Failed to sendAsync message: " + mockMetric, mockThrowable);
     }
 
  }

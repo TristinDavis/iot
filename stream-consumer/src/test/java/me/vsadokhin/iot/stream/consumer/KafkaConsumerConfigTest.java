@@ -10,8 +10,8 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.vsadokhin.iot.data.SensorRepository;
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.MetricRepository;
+import me.vsadokhin.iot.data.domain.Metric;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.junit.Before;
@@ -102,12 +102,12 @@ public class KafkaConsumerConfigTest {
         kafkaConsumerConfig = spy(kafkaConsumerConfig);
         doReturn(mockMap).when(kafkaConsumerConfig).consumerConfigs();
         whenNew(StringDeserializer.class).withNoArguments().thenReturn(mockStringDeserializer);
-        whenNew(JsonDeserializer.class).withArguments(Sensor.class).thenReturn(mockJsonDeserializer);
+        whenNew(JsonDeserializer.class).withArguments(Metric.class).thenReturn(mockJsonDeserializer);
         whenNew(DefaultKafkaConsumerFactory.class).withArguments(mockMap, mockStringDeserializer, mockJsonDeserializer)
                 .thenReturn(mockDefaultKafkaConsumerFactory);
 
         // act
-        ConsumerFactory<String, Sensor> result = kafkaConsumerConfig.consumerFactory();
+        ConsumerFactory<String, Metric> result = kafkaConsumerConfig.consumerFactory();
 
         // verify
         assertThat(result, is(mockDefaultKafkaConsumerFactory));
@@ -122,7 +122,7 @@ public class KafkaConsumerConfigTest {
         doReturn(mock(ConsumerFactory.class)).when(kafkaConsumerConfig).consumerFactory();
 
         // act
-        ConcurrentKafkaListenerContainerFactory<String, Sensor> result = kafkaConsumerConfig.kafkaListenerContainerFactory();
+        ConcurrentKafkaListenerContainerFactory<String, Metric> result = kafkaConsumerConfig.kafkaListenerContainerFactory();
 
         // verify
         assertThat(result, is(mockConcurrentKafkaListenerContainerFactory));
@@ -136,7 +136,7 @@ public class KafkaConsumerConfigTest {
         doReturn(mockConsumerFactory).when(kafkaConsumerConfig).consumerFactory();
 
         // act
-        ConcurrentKafkaListenerContainerFactory<String, Sensor> result = kafkaConsumerConfig.kafkaListenerContainerFactory();
+        ConcurrentKafkaListenerContainerFactory<String, Metric> result = kafkaConsumerConfig.kafkaListenerContainerFactory();
 
         // verify
         assertThat(result.getConsumerFactory(), is(mockConsumerFactory));
@@ -145,13 +145,13 @@ public class KafkaConsumerConfigTest {
     @Test
     public void sensorRepository() throws Exception {
         // setup
-        SensorRepository mockSensorRepository = mock(SensorRepository.class);
-        whenNew(SensorRepository.class).withNoArguments().thenReturn(mockSensorRepository);
+        MetricRepository mockMetricRepository = mock(MetricRepository.class);
+        whenNew(MetricRepository.class).withNoArguments().thenReturn(mockMetricRepository);
 
         // act
-        SensorRepository result = kafkaConsumerConfig.sensorRepository();
+        MetricRepository result = kafkaConsumerConfig.sensorRepository();
 
         // verify
-        assertThat(result, is(mockSensorRepository));
+        assertThat(result, is(mockMetricRepository));
     }
 }

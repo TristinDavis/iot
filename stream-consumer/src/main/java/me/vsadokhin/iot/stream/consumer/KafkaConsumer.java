@@ -1,7 +1,8 @@
 package me.vsadokhin.iot.stream.consumer;
 
-import me.vsadokhin.iot.data.SensorRepository;
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.MetricRepository;
+import me.vsadokhin.iot.data.MetricTable;
+import me.vsadokhin.iot.data.domain.Metric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -9,16 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaConsumer {
 
-    private final SensorRepository sensorRepository;
+    private final MetricRepository metricRepository;
 
     @Autowired
-    public KafkaConsumer(SensorRepository sensorRepository) {
-        this.sensorRepository = sensorRepository;
+    public KafkaConsumer(MetricRepository metricRepository) {
+        this.metricRepository = metricRepository;
     }
 
-    @KafkaListener(topics = "sensor", groupId = "stream")
-    public void processMessage(Sensor sensor) {
-        sensorRepository.insert(sensor);
+    @KafkaListener(topics = "metric", groupId = "stream")
+    public void processMessage(Metric metric) {
+        metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR);
+        metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR_TYPE);
     }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.boot.SpringApplication;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SpringApplication.class)
-public class ReceiveSensorApplicationTest {
+public class ReceiveMetricApplicationTest {
 
     @Test
     public void testMain_callSpringApplicationRun() {

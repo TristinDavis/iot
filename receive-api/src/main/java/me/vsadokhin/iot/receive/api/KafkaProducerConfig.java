@@ -3,7 +3,7 @@ package me.vsadokhin.iot.receive.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.domain.Metric;
 import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -28,12 +28,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Sensor> producerFactory() {
+    public ProducerFactory<String, Metric> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, Sensor> kafkaTemplate() {
+    public KafkaTemplate<String, Metric> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 

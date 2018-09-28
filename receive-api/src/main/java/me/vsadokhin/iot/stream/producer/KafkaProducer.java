@@ -1,6 +1,6 @@
 package me.vsadokhin.iot.stream.producer;
 
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.domain.Metric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +15,21 @@ public class KafkaProducer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
     @Autowired
-    private KafkaTemplate<String, Sensor> kafkaTemplate;
+    private KafkaTemplate<String, Metric> kafkaTemplate;
 
     @Async
-    public void sendAsync(String topic, Sensor sensor) {
-        ListenableFuture<SendResult<String, Sensor>> future = kafkaTemplate.send(topic, sensor);
-        future.addCallback(new ListenableFutureCallback<SendResult<String, Sensor>>() {
+    public void sendAsync(String topic, Metric metric) {
+        ListenableFuture<SendResult<String, Metric>> future = kafkaTemplate.send(topic, metric);
+        future.addCallback(new ListenableFutureCallback<SendResult<String, Metric>>() {
 
             @Override
-            public void onSuccess(SendResult<String, Sensor> result) {
-                LOGGER.debug("Sensor data is sent: " + result.toString());
+            public void onSuccess(SendResult<String, Metric> result) {
+                LOGGER.debug("Metric data is sent: " + result.toString());
             }
 
             @Override
             public void onFailure(final Throwable throwable) {
-                LOGGER.error("Failed to sendAsync message: " + sensor, throwable);
+                LOGGER.error("Failed to sendAsync message: " + metric, throwable);
             }
 
         });

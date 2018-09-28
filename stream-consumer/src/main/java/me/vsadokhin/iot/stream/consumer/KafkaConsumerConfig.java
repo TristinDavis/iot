@@ -3,8 +3,8 @@ package me.vsadokhin.iot.stream.consumer;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.vsadokhin.iot.data.SensorRepository;
-import me.vsadokhin.iot.data.domain.Sensor;
+import me.vsadokhin.iot.data.MetricRepository;
+import me.vsadokhin.iot.data.domain.Metric;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -27,22 +27,22 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, Sensor> consumerFactory() {
+    public ConsumerFactory<String, Metric> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs(),
                 new StringDeserializer(),
-                new JsonDeserializer<>(Sensor.class));
+                new JsonDeserializer<>(Metric.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Sensor> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Sensor> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, Metric> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Metric> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @Bean
-    public SensorRepository sensorRepository() {
-        return new SensorRepository();
+    public MetricRepository sensorRepository() {
+        return new MetricRepository();
     }
 }

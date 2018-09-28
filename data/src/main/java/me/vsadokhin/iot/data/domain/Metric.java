@@ -1,12 +1,12 @@
 package me.vsadokhin.iot.data.domain;
 
-public class Sensor {
+public class Metric {
 
     private String sensorId;
 
     private String type;
 
-    private long created;
+    private long when;
 
     private float value;
 
@@ -26,12 +26,12 @@ public class Sensor {
         this.type = type;
     }
 
-    public long getCreated() {
-        return created;
+    public long getWhen() {
+        return when;
     }
 
-    public void setCreated(long created) {
-        this.created = created;
+    public void setWhen(long when) {
+        this.when = when;
     }
 
     public float getValue() {

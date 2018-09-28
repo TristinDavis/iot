@@ -1,8 +1,8 @@
 CREATE KEYSPACE iot WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
 USE iot;
 
-CREATE TABLE metrics_by_sensor (sensor_id text, week timestamp, type text, when timestamp, value float,
+CREATE TABLE metric_by_sensor (sensor_id text, week timestamp, type text, when timestamp, value float,
 PRIMARY KEY ((sensor_id, week), when, type));
 
-CREATE TABLE metrics_by_sensor_type (type text, day timestamp, sensor_id text, when timestamp, value float,
+CREATE TABLE metric_by_sensor_type (type text, day timestamp, sensor_id text, when timestamp, value float,
 PRIMARY KEY ((type, day), when, sensor_id));
