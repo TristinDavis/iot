@@ -3,6 +3,7 @@ package me.vsadokhin.iot.stream.consumer;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
+import me.vsadokhin.iot.data.utility.CassandraClusterUtility;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -10,10 +11,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.boot.SpringApplication;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(SpringApplication.class)
+@PrepareForTest({SpringApplication.class, CassandraClusterUtility.class })
 public class StreamConsumerApplicationTest {
+
     @Test
-    public void testMain_callSpringApplicationRun() {
+    public void main_callSpringApplicationRun() {
         // setup
         mockStatic(SpringApplication.class);
 
@@ -23,5 +25,18 @@ public class StreamConsumerApplicationTest {
         // verify
         verifyStatic(SpringApplication.class);
         SpringApplication.run(StreamConsumerApplication.class, "arg", "1", "2");
+    }
+
+    @Test
+    public void destroy_callCassandraClusterUtilityCloseCluster() {
+        // setup
+        mockStatic(CassandraClusterUtility.class);
+
+        // act
+        new StreamConsumerApplication().destroy();
+
+        // verify
+        verifyStatic(CassandraClusterUtility.class);
+        CassandraClusterUtility.closeCluster();
     }
 }
