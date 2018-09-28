@@ -1,39 +1,44 @@
 package me.vsadokhin.iot.data.domain;
 
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-
-@Table("sensor")
 public class Sensor {
 
-    @PrimaryKey
-    private SensorId id;
+    private String sensorId;
 
-    @Column
-    private double value;
+    private String type;
 
-    public Sensor() {
+    private long created;
+
+    private float value;
+
+    public String getSensorId() {
+        return sensorId;
     }
 
-    public Sensor(long created, String name, double value) {
-        id = new SensorId(created, name);
-        this.value = value;
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
     }
 
-    public SensorId getId() {
-        return id;
+    public String getType() {
+        return type;
     }
 
-    public void setId(SensorId id) {
-        this.id = id;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public double getValue() {
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    public float getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(float value) {
         this.value = value;
     }
 }

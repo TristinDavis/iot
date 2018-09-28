@@ -1,18 +1,4 @@
-buildscript {
-  ext {
-    springBootVersion = '2.0.5.RELEASE'
-  }
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath("io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE")
-  }
-}
-
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'io.spring.dependency-management'
 
 group = 'me.vsadokhin.iot'
 version = '0.0.1-SNAPSHOT'
@@ -22,9 +8,20 @@ repositories {
   mavenCentral()
 }
 
+def powermock_version = "1.7.4"
+def mockito_version = "1.10.19"
+
 dependencies {
-  compile 'org.springframework.data:spring-data-cassandra:2.0.10.RELEASE'
-  testCompile 'org.springframework.boot:spring-boot-starter-data-cassandra:2.0.5.RELEASE'
-  testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE'
+  compile 'com.datastax.cassandra:cassandra-driver-core:3.6.0'
+
   testCompile 'junit:junit:4.12'
+  testCompile("org.powermock:powermock-module-junit4:${powermock_version}") {
+    exclude module: "junit"
+    exclude module: "mockito-core"
+  }
+  testCompile("org.powermock:powermock-api-mockito:${powermock_version}") {
+    exclude module: "mockito-all"
+    exclude module: "mockito-core"
+  }
+  testCompile "org.mockito:mockito-core:${mockito_version}"
 }

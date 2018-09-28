@@ -10,6 +10,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.vsadokhin.iot.data.SensorRepository;
 import me.vsadokhin.iot.data.domain.Sensor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -139,5 +140,18 @@ public class KafkaConsumerConfigTest {
 
         // verify
         assertThat(result.getConsumerFactory(), is(mockConsumerFactory));
+    }
+
+    @Test
+    public void sensorRepository() throws Exception {
+        // setup
+        SensorRepository mockSensorRepository = mock(SensorRepository.class);
+        whenNew(SensorRepository.class).withNoArguments().thenReturn(mockSensorRepository);
+
+        // act
+        SensorRepository result = kafkaConsumerConfig.sensorRepository();
+
+        // verify
+        assertThat(result, is(mockSensorRepository));
     }
 }

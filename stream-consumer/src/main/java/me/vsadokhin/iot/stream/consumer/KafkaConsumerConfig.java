@@ -3,6 +3,7 @@ package me.vsadokhin.iot.stream.consumer;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.vsadokhin.iot.data.SensorRepository;
 import me.vsadokhin.iot.data.domain.Sensor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -38,5 +39,10 @@ public class KafkaConsumerConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
+    }
+
+    @Bean
+    public SensorRepository sensorRepository() {
+        return new SensorRepository();
     }
 }
