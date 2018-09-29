@@ -20,11 +20,11 @@ public class ReceiveMetricApplicationTest {
         mockStatic(SpringApplication.class);
         
         // act
-        ReceiveSensorApplication.main("arg", "1", "2");
+        ReceiveMetricApplication.main("arg", "1", "2");
 
         // verify
         verifyStatic(SpringApplication.class);
-        SpringApplication.run(ReceiveSensorApplication.class, "arg", "1", "2");
+        SpringApplication.run(ReceiveMetricApplication.class, "arg", "1", "2");
     }
 
 }
