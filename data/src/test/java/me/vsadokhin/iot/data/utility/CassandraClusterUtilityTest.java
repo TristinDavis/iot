@@ -38,6 +38,44 @@ public class CassandraClusterUtilityTest {
     }
 
     @Test
+    public void getCluster_clusterIsClosed_callCreateClusterOnce() {
+        // setup
+        Cluster mockCluster = mock(Cluster.class);
+        when(mockCluster.isClosed()).thenReturn(true);
+        CassandraClusterUtility.setCluster(mockCluster);
+
+        mockStatic(CassandraClusterUtility.class);
+        when(CassandraClusterUtility.getCluster()).thenCallRealMethod();
+        when(CassandraClusterUtility.getCluster()).thenReturn(mock(Cluster.class));
+
+        // act
+        CassandraClusterUtility.getCluster();
+
+        // verify
+        verifyStatic(CassandraClusterUtility.class);
+        CassandraClusterUtility.createCluster();
+    }
+
+    @Test
+    public void getCluster_clusterIsClosed_checkResult() {
+        // setup
+        Cluster mockClosedCluster = mock(Cluster.class);
+        when(mockClosedCluster.isClosed()).thenReturn(true);
+        CassandraClusterUtility.setCluster(mockClosedCluster);
+
+        mockStatic(CassandraClusterUtility.class);
+        when(CassandraClusterUtility.getCluster()).thenCallRealMethod();
+        Cluster mockCluster = mock(Cluster.class);
+        when(CassandraClusterUtility.getCluster()).thenReturn(mockCluster, mock(Cluster.class));
+
+        // act
+        Cluster result = CassandraClusterUtility.getCluster();
+
+        // verify
+        assertThat(result, is(mockCluster));
+    }
+
+    @Test
     public void getCluster_twice_checkResult() {
         // setup
         CassandraClusterUtility.setCluster(null);

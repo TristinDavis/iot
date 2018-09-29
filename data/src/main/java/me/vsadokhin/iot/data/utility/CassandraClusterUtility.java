@@ -9,7 +9,7 @@ public final class CassandraClusterUtility {
     private CassandraClusterUtility(){}
 
     static Cluster getCluster() {
-        if (cluster == null) {
+        if (cluster == null || cluster.isClosed()) {
             cluster = createCluster();
         }
         return cluster;
