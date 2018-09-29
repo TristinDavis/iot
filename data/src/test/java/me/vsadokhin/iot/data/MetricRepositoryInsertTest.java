@@ -2,6 +2,7 @@ package me.vsadokhin.iot.data;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
@@ -10,6 +11,7 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
 import me.vsadokhin.iot.data.domain.Metric;
 import me.vsadokhin.iot.data.domain.MetricBuilder;
+import me.vsadokhin.iot.data.exception.StorageException;
 import me.vsadokhin.iot.data.utility.CassandraClusterUtility;
 import me.vsadokhin.iot.data.utility.CassandraSessionUtility;
 import me.vsadokhin.iot.data.utility.DateUtility;
@@ -17,7 +19,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MetricRepositoryTest {
+public class MetricRepositoryInsertTest {
 
     private MetricRepository metricRepository;
     private Session session;
@@ -83,5 +85,41 @@ public class MetricRepositoryTest {
 
         verifyRow(metric, result);
     }
-    
+
+    @Test
+    public void insert_metricByType_noType_checkStorageException() {
+        // setup
+        Metric metric = new MetricBuilder("sensor2")
+                .setWhen(System.currentTimeMillis())
+                .setValue(2.5F)
+                .build();
+        metric.setType(null);
+
+        try {
+            // act
+            metricRepository.insert(metric, MetricTable.METRIC_BY_TYPE);
+            fail();
+        } catch (StorageException e) {
+            // verify
+            assertThat(e.getMessage(), is("Failed to insert metric: " + metric));
+        }
+    }
+
+    @Test
+    public void insert_metricBySensor_noSensor_checkStorageException() {
+        // setup
+        Metric metric = new MetricBuilder(null)
+                .setWhen(System.currentTimeMillis())
+                .setValue(2.5F)
+                .build();
+
+        try {
+            // act
+            metricRepository.insert(metric, MetricTable.METRIC_BY_TYPE);
+            fail();
+        } catch (StorageException e) {
+            // verify
+            assertThat(e.getMessage(), is("Failed to insert metric: " + metric));
+        }
+    }
 }

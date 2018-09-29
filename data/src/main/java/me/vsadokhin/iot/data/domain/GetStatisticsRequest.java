@@ -1,15 +1,10 @@
 package me.vsadokhin.iot.data.domain;
 
-import java.util.List;
-
-import me.vsadokhin.iot.data.MetricTable;
-
 public class GetStatisticsRequest {
 
     private String aggregator;
-    private MetricTable metricTable;
     private String type;
-    private List<String> sensorIds;
+    private String sensorId;
     private long from;
     private long to;
 
@@ -21,14 +16,6 @@ public class GetStatisticsRequest {
         this.aggregator = aggregator;
     }
 
-    public MetricTable getMetricTable() {
-        return metricTable;
-    }
-
-    public void setMetricTable(MetricTable metricTable) {
-        this.metricTable = metricTable;
-    }
-
     public String getType() {
         return type;
     }
@@ -37,12 +24,12 @@ public class GetStatisticsRequest {
         this.type = type;
     }
 
-    public List<String> getSensorIds() {
-        return sensorIds;
+    public String getSensorId() {
+        return sensorId;
     }
 
-    public void setSensorIds(List<String> sensorIds) {
-        this.sensorIds = sensorIds;
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
     }
 
     public long getFrom() {
@@ -59,5 +46,16 @@ public class GetStatisticsRequest {
 
     public void setTo(long to) {
         this.to = to;
+    }
+
+    @Override
+    public String toString() {
+        return "GetStatisticsRequest{" +
+                "aggregator='" + aggregator + '\'' +
+                ", type='" + type + '\'' +
+                ", sensorId='" + sensorId + '\'' +
+                ", from=" + from +
+                ", to=" + to +
+                '}';
     }
 }

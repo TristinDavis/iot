@@ -41,4 +41,14 @@ public class Metric {
     public void setValue(float value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Metric{" +
+                "sensorId='" + sensorId + '\'' +
+                ", type='" + type + '\'' +
+                ", when=" + when +
+                ", value=" + value +
+                '}';
+    }
 }
