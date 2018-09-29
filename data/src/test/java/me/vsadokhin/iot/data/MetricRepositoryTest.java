@@ -53,10 +53,10 @@ public class MetricRepositoryTest {
                 .build();
 
         // act
-        metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR_TYPE);
+        metricRepository.insert(metric, MetricTable.METRIC_BY_TYPE);
 
         // verify
-        Select select = QueryBuilder.select().from(MetricTable.METRIC_BY_SENSOR_TYPE.getTable());
+        Select select = QueryBuilder.select().from(MetricTable.METRIC_BY_TYPE.getTable());
         select.where(QueryBuilder.eq("type", metric.getType()))
                 .and(QueryBuilder.eq("day", DateUtility.getDayStart(metric.getWhen())));
         ResultSet result = session.execute(select);

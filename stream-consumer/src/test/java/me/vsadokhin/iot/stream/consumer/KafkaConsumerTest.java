@@ -41,7 +41,7 @@ public class KafkaConsumerTest {
         kafkaConsumer.processMessage(mockMetric);
 
         // verify
-        verify(mockMetricRepository).insert(mockMetric, MetricTable.METRIC_BY_SENSOR_TYPE);
+        verify(mockMetricRepository).insert(mockMetric, MetricTable.METRIC_BY_TYPE);
     }
 
 }

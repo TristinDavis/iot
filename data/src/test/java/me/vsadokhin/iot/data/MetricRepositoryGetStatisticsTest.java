@@ -75,7 +75,7 @@ public class MetricRepositoryGetStatisticsTest {
 
         for (Metric metric : metrics) {
             METRIC_REPOSITORY.insert(metric, MetricTable.METRIC_BY_SENSOR);
-            METRIC_REPOSITORY.insert(metric, MetricTable.METRIC_BY_SENSOR_TYPE);
+            METRIC_REPOSITORY.insert(metric, MetricTable.METRIC_BY_TYPE);
         }
     }
 
@@ -166,7 +166,7 @@ public class MetricRepositoryGetStatisticsTest {
         // setup
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setAggregator("min");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
@@ -189,7 +189,7 @@ public class MetricRepositoryGetStatisticsTest {
         // setup
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setAggregator("max");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
@@ -212,7 +212,7 @@ public class MetricRepositoryGetStatisticsTest {
         // setup
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setAggregator("avg");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
@@ -227,7 +227,7 @@ public class MetricRepositoryGetStatisticsTest {
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
         getStatisticsRequest.setAggregator("min");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
@@ -251,7 +251,7 @@ public class MetricRepositoryGetStatisticsTest {
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
         getStatisticsRequest.setAggregator("max");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
@@ -275,7 +275,7 @@ public class MetricRepositoryGetStatisticsTest {
         getStatisticsRequest.setType("type1");
         getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
         getStatisticsRequest.setAggregator("avg");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_SENSOR_TYPE);
+        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
 
         // act
         float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);

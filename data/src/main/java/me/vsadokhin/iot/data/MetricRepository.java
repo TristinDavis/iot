@@ -7,6 +7,10 @@ import static com.datastax.driver.core.querybuilder.QueryBuilder.in;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.lt;
 import static me.vsadokhin.iot.data.MetricTable.METRIC_BY_SENSOR;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
@@ -32,6 +36,11 @@ public class MetricRepository {
         insert.value("sensor_id", metric.getSensorId());
         insert.value("when", metric.getWhen());
         insert.value("value", metric.getValue());
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(metric.getWhen()), ZoneId.of("UTC"));
+        zonedDateTime.getYear();
+        zonedDateTime.getMonth();
+        zonedDateTime.getDayOfMonth();
+        
         if (METRIC_BY_SENSOR.equals(table)) {
             insert.value("week", DateUtility.getWeekStart(metric.getWhen()));
         } else {

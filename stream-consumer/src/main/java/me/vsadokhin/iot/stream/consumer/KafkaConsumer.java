@@ -20,7 +20,7 @@ public class KafkaConsumer {
     @KafkaListener(topics = "metric", groupId = "stream")
     public void processMessage(Metric metric) {
         metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR);
-        metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR_TYPE);
+        metricRepository.insert(metric, MetricTable.METRIC_BY_TYPE);
     }
 
 }
