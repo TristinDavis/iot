@@ -4,7 +4,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -219,77 +218,5 @@ public class MetricRepositoryGetStatisticsTest {
 
         // verify
         assertThat(result, is(0.4F));
-    }
-
-    @Test
-    public void getStatistics_min_byTypeAndSensors() {
-        // setup
-        getStatisticsRequest.setType("type1");
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
-        getStatisticsRequest.setAggregator("min");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
-
-        // act
-        float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(0.1F));
-
-        // setup
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor3"));
-
-        // act
-        result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(0.2F));
-    }
-
-    @Test
-    public void getStatistics_max_byTypeAndSensors() {
-        // setup
-        getStatisticsRequest.setType("type1");
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
-        getStatisticsRequest.setAggregator("max");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
-
-        // act
-        float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(1F));
-
-        // setup
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor2", "sensor3"));
-
-        // act
-        result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(0.3F));
-    }
-
-    @Test
-    public void getStatistics_avg_byTypeAndSensors() {
-        // setup
-        getStatisticsRequest.setType("type1");
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor1", "sensor2"));
-        getStatisticsRequest.setAggregator("avg");
-        getStatisticsRequest.setMetricTable(MetricTable.METRIC_BY_TYPE);
-
-        // act
-        float result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(0.4F));
-
-        // setup
-        getStatisticsRequest.setSensorIds(Arrays.asList("sensor2"));
-
-        // act
-        result = METRIC_REPOSITORY.getStatistics(getStatisticsRequest);
-
-        // verify
-        assertThat(result, is(0.2F));
     }
 }
