@@ -1,14 +1,20 @@
 package me.vsadokhin.iot.data.domain;
 
+import javax.validation.constraints.NotNull;
+
 public class Metric {
 
+    @NotNull
     private String sensorId;
 
+    @NotNull
     private String type;
 
-    private long when;
+    @NotNull
+    private Long when;
 
-    private float value;
+    @NotNull
+    private Float value;
 
     public String getSensorId() {
         return sensorId;

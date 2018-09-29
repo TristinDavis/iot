@@ -13,6 +13,7 @@ def mockito_version = "1.10.19"
 
 dependencies {
   compile 'com.datastax.cassandra:cassandra-driver-core:3.6.0'
+  compile 'org.hibernate:hibernate-validator:6.0.13.Final'
 
   testCompile 'junit:junit:4.12'
   testCompile("org.powermock:powermock-module-junit4:${powermock_version}") {

@@ -1,5 +1,7 @@
 package me.vsadokhin.iot.receive.api;
 
+import javax.validation.Valid;
+
 import me.vsadokhin.iot.data.domain.Metric;
 import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,7 @@ public class MetricResource {
     }
 
     @PostMapping("/metric")
-    ResponseEntity create(@RequestBody Metric metric) {
-        // TODO Vasiliy validate
+    ResponseEntity create(@Valid @RequestBody Metric metric) {
         kafkaProducer.sendAsync("metric", metric);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
