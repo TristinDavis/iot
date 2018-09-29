@@ -10,6 +10,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
+import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.Cluster;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -126,6 +127,20 @@ public class CassandraClusterUtilityTest {
 
         // verify
         verify(mockClusterBuilder).withPort(port);
+    }
+
+    @Test
+    public void createCluster_callBuilderWithAuthProvider() {
+        // setup
+        Cluster.Builder mockClusterBuilder = prepareToTestCreateCluster();
+        AuthProvider mockAuthProvider = mock(AuthProvider.class);
+        when(CassandraConfig.getAuthProvider()).thenReturn(mockAuthProvider);
+        
+        // act
+        CassandraClusterUtility.createCluster();
+        
+        // verify
+        verify(mockClusterBuilder).withAuthProvider(mockAuthProvider);
     }
 
     @Test

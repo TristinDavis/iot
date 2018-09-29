@@ -8,5 +8,7 @@ docker run --rm -d --name iot-stream-consumer \
 anapsix/alpine-java:8 \
 java \
 -Dcassandra.contact.points=iot-cassandra \
+-Dcassandra.username=iot_write_role \
+-Dcassandra.password=iotWrite123 \
 -Dkafka.endpoints=iot-kafka:9092 \
 -jar /tmp/stream-consumer.jar

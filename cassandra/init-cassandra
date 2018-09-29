@@ -6,3 +6,9 @@ PRIMARY KEY ((sensor_id, week), when));
 
 CREATE TABLE metric_by_type (type text, day timestamp, sensor_id text, when timestamp, value float,
 PRIMARY KEY ((type, day), when, sensor_id));
+
+CREATE ROLE iot_statistics_role WITH PASSWORD = 'iotStatistics123' AND LOGIN = true;
+GRANT SELECT ON KEYSPACE iot TO iot_statistics_role;
+
+CREATE ROLE iot_write_role WITH PASSWORD = 'iotWrite123' AND LOGIN = true;
+GRANT MODIFY ON KEYSPACE iot TO iot_write_role;

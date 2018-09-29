@@ -19,6 +19,7 @@ public final class CassandraClusterUtility {
         Cluster.Builder builder = Cluster.builder();
         builder.addContactPoints(CassandraConfig.getContactPoints());
         builder.withPort(CassandraConfig.getPort());
+        builder.withAuthProvider(CassandraConfig.getAuthProvider());
         return builder.build();
     }
 
