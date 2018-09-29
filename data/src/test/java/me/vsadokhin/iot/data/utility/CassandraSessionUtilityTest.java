@@ -39,6 +39,44 @@ public class CassandraSessionUtilityTest {
     }
 
     @Test
+    public void getSession_sessionIsClosed_callCreateSessionOnce() {
+        // setup
+        Session mockSession = mock(Session.class);
+        when(mockSession.isClosed()).thenReturn(true);
+        CassandraSessionUtility.setSession(mockSession);
+
+        mockStatic(CassandraSessionUtility.class);
+        when(CassandraSessionUtility.getSession()).thenCallRealMethod();
+        when(CassandraSessionUtility.getSession()).thenReturn(mock(Session.class));
+
+        // act
+        CassandraSessionUtility.getSession();
+
+        // verify
+        verifyStatic(CassandraSessionUtility.class);
+        CassandraSessionUtility.createSession();
+    }
+    
+    @Test
+    public void getSession_sessionIsClosed_checkResult() {
+        // setup
+        Session mockClosedSession = mock(Session.class);
+        when(mockClosedSession.isClosed()).thenReturn(true);
+        CassandraSessionUtility.setSession(mockClosedSession);
+
+        mockStatic(CassandraSessionUtility.class);
+        when(CassandraSessionUtility.getSession()).thenCallRealMethod();
+        Session mockSession = mock(Session.class);
+        when(CassandraSessionUtility.getSession()).thenReturn(mockSession, mock(Session.class));
+
+        // act
+        Session result = CassandraSessionUtility.getSession();
+
+        // verify
+        assertThat(result, is(mockSession));
+    }
+
+    @Test
     public void getSession_twice_checkResult() {
         // setup
         CassandraSessionUtility.setSession(null);

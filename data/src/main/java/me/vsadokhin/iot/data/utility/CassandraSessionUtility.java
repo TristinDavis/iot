@@ -9,7 +9,7 @@ public final class CassandraSessionUtility {
     private CassandraSessionUtility(){}
 
     public static Session getSession() {
-        if (session == null) {
+        if (session == null || session.isClosed()) {
             session = createSession();
         }
         return session;
