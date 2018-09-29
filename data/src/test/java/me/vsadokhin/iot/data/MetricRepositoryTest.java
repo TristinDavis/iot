@@ -45,7 +45,7 @@ public class MetricRepositoryTest {
     }
 
     @Test
-    public void insert_metricsBySensorType() {
+    public void insert_metricByType() {
         // setup
         Metric metric = new MetricBuilder("sensor1", "type1")
                 .setWhen(System.currentTimeMillis())
@@ -65,7 +65,7 @@ public class MetricRepositoryTest {
     }
 
     @Test
-    public void insert_metricsBySensor() {
+    public void insert_metricBySensor() {
         // setup
         Metric metric = new MetricBuilder("sensor2")
                 .setWhen(System.currentTimeMillis())
