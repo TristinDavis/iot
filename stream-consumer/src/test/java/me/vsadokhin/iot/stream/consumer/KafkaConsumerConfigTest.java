@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.spy;
+import static org.powermock.api.mockito.PowerMockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.AbstractMessageListenerContainer;
+import org.springframework.kafka.listener.config.ContainerProperties;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 @RunWith(PowerMockRunner.class)
@@ -127,6 +130,7 @@ public class KafkaConsumerConfigTest {
         // setup
         ConcurrentKafkaListenerContainerFactory mockConcurrentKafkaListenerContainerFactory = mock(ConcurrentKafkaListenerContainerFactory.class);
         whenNew(ConcurrentKafkaListenerContainerFactory.class).withNoArguments().thenReturn(mockConcurrentKafkaListenerContainerFactory);
+        when(mockConcurrentKafkaListenerContainerFactory.getContainerProperties()).thenReturn(new ContainerProperties(""));
         kafkaConsumerConfig = spy(kafkaConsumerConfig);
         doReturn(mock(ConsumerFactory.class)).when(kafkaConsumerConfig).consumerFactory();
 
@@ -149,6 +153,20 @@ public class KafkaConsumerConfigTest {
 
         // verify
         assertThat(result.getConsumerFactory(), is(mockConsumerFactory));
+    }
+
+    @Test
+    public void kafkaListenerContainerFactory_checkResultAckMode() {
+        // setup
+        kafkaConsumerConfig = spy(kafkaConsumerConfig);
+        ConsumerFactory mockConsumerFactory = mock(ConsumerFactory.class);
+        doReturn(mockConsumerFactory).when(kafkaConsumerConfig).consumerFactory();
+
+        // act
+        ConcurrentKafkaListenerContainerFactory<String, Metric> result = kafkaConsumerConfig.kafkaListenerContainerFactory();
+
+        // verify
+        assertThat(result.getContainerProperties().getAckMode(), is(AbstractMessageListenerContainer.AckMode.MANUAL_IMMEDIATE));
     }
 
     @Test
