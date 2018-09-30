@@ -1,10 +1,11 @@
 # iot
-###Conceptual model 
+
+## Conceptual model 
 Load Balancer 1 <-> Receive Cluster -> Broker/streaming -> Consumers Cluster -> Storage
 
 Load Balancer 2 <-> Reading Cluster <-> Storage
 
-###Implementation
+## Implementation
 *receive-api*, *statistics-api*, *stream-consumer* are java applications. First two are web applications to create metric and get statistics. Being packed in docker they can be scaled, for instance, in AWS ECS on production.
 
 *data* module encapsulates read/write feature with storage. It is used by *stream-consumer* to write and *statistics-api* to query statistics.
@@ -15,7 +16,7 @@ Note that nothing above is carved in stone. For example, receiving/reading can b
 
 The implementation does not include load balancer setup/pick. It can be cloud based approach like AWS Application/Elastic Load Balancer or Google Cloud Load Balancer. Alternatively, it can be a handmade approach with Nginx, HAProxy etc. 
 
-###How to run
+## How to run
 Requirements: Java 8, Docker, Bash, open ports 8080 and 8081.
 
 Execute from root folder to build modules and start everything in docker:
@@ -23,8 +24,8 @@ Execute from root folder to build modules and start everything in docker:
 ./run.sh
 ```
  
-###How to access the service 
-##### 1. Create metric
+## How to access the service 
+### Create metric
 
 Perform POST request to localhost:8080/metric with JSON body like
 ```json 
@@ -41,7 +42,7 @@ The request can be made with curl:
 curl -XPOST -d '{"sensorId":"s2", "type":"t1", "when":"1538139260752", "value":1.1}' -H "Content-Type: application/json" localhost:8080/metric
 ```
 
-##### 2. Get statistics
+### Get statistics
 
 Perform GET request to localhost:8081/statistics with username **getStatisticsUser** and password **statistics123** and query parameters:
  
@@ -59,7 +60,7 @@ curl -u getStatisticsUser:statistics123 localhost:8081/statistics?aggregator=min
 curl -u getStatisticsUser:statistics123 localhost:8081/statistics?aggregator=min\&sensorId=mySensor\&from=123\&to=456
 ```
 
-##### 3. Simulate at least 3 IoT devices sending data every second
+### Simulate at least 3 IoT devices sending data every second
 Note that author manipulates *metric* term considering that 1 IoT device might send multiple metrics. This test simulates 3 simultaneously incoming metrics.  
 Run from root folder:
 ```bash
@@ -71,14 +72,14 @@ Run from root folder:
 The test will fail if count of metrics don't match with **simultaneous.metrics** * **duration** at the end.  
 The test does not check reading API. Feel free to query manually.         
 
-###Limitations
-**Receiving format**   
+## Limitations
+### Receiving format
 It is JSON now but it is a subject to change depending on real production cases. For example, author believes that different IoT devices might send metrics in different formats. Also I have a feeling that some devices might send measurements in bulk. **receive-api** is good enough to be enhanced and meet both cases on demand.  
 
-**Float value**  
+### Float value
 Current metric is hardcoded with float type. Float might not be sufficient in some cases. I also think that IoT devices might send not only single value but also more complex data, for example, coordinates like latitude/longitude. It might even happen that value is not a number at all. Both Cassandra and my implementation are fine with tuning type or even supporting multiple types if it is required. 
  
-**Readings**  
+### Readings
 Only min, max, avg are implemented. Median or other percentile statistics can be implemented with [custom aggregate functions](https://stackoverflow.com/questions/52528838/how-to-get-x-percentile-in-cassandra).
     
 Readings are only provided either by one *type* or one *sensorId*. Also, getting statistics by type is limited by one week range and selecting by sensorId by one day. Those limitations are subjects to change depending on production cases.
@@ -87,10 +88,10 @@ Readings are only provided either by one *type* or one *sensorId*. Also, getting
    
 *statistics-api*/*data* modules are flexible enough to be enhanced to support more readings and multiple readings at time.  
 
-**Scalability, high availability, performance, fault-tolerance**  
+### Scalability, high availability, performance, fault-tolerance
 They will depend on a particular infrastructure implementation, e.x. clusters' setup, nodes amount, auto scaling, cross datacenter replication etc.
 
-**Secure Web Service**  
+### Secure Web Service
 The implementation contains only three things regarding the topic:
   
 a) *statistics-api* requires basic authorization. Even so there is only one in memory user, it can be switched to real DB storage
