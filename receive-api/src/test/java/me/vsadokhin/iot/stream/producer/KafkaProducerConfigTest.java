@@ -1,4 +1,4 @@
-package me.vsadokhin.iot.receive.api;
+package me.vsadokhin.iot.stream.producer;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.vsadokhin.iot.data.domain.Metric;
-import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.Before;

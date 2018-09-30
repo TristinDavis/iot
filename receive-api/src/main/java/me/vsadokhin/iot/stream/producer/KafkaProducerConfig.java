@@ -1,10 +1,9 @@
-package me.vsadokhin.iot.receive.api;
+package me.vsadokhin.iot.stream.producer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import me.vsadokhin.iot.data.domain.Metric;
-import me.vsadokhin.iot.stream.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
