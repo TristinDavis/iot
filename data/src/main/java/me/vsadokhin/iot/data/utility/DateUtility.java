@@ -3,6 +3,7 @@ package me.vsadokhin.iot.data.utility;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public final class DateUtility {
@@ -14,7 +15,7 @@ public final class DateUtility {
     }
 
     public static long getWeekStart(long milliseconds) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.UK);
         calendar.setTimeInMillis(milliseconds);
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
