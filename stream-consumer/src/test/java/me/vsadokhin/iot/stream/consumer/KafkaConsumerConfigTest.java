@@ -24,6 +24,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.AbstractMessageListenerContainer;
+import org.springframework.kafka.listener.KafkaListenerErrorHandler;
 import org.springframework.kafka.listener.config.ContainerProperties;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
@@ -176,9 +177,22 @@ public class KafkaConsumerConfigTest {
         whenNew(MetricRepository.class).withNoArguments().thenReturn(mockMetricRepository);
 
         // act
-        MetricRepository result = kafkaConsumerConfig.sensorRepository();
+        MetricRepository result = kafkaConsumerConfig.metricRepository();
 
         // verify
         assertThat(result, is(mockMetricRepository));
+    }
+    
+    @Test
+    public void errorHandler() throws Exception {
+        // setup
+        KafkaConsumerErrorHandler mockKafkaConsumerErrorHandler = mock(KafkaConsumerErrorHandler.class);
+        whenNew(KafkaConsumerErrorHandler.class).withNoArguments().thenReturn(mockKafkaConsumerErrorHandler);
+        
+        // act
+        KafkaListenerErrorHandler result = kafkaConsumerConfig.errorHandler();
+
+        // verify
+        assertThat(result, is(mockKafkaConsumerErrorHandler));
     }
 }
