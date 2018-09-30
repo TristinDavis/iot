@@ -64,7 +64,7 @@ curl -u getStatisticsUser:statistics123 localhost:8081/statistics?aggregator=min
 Note that the author introduces the term *metric* considering that 1 IoT device might send multiple metrics. This test simulates incoming metrics, running simultaneously. 
 Run from the root folder:
 ```bash
-./gradlew :qa:load test -Pqa-tests -Dsimultaneous.metrics=3 -Dduration=60
+./gradlew -i :qa:load:test -Pqa-tests -Dsimultaneous.metrics=3 -Dduration=60
 ```
 **simultaneous.metrics** is the number of metrics has to be sent, 3 is default
 **duration** determines determines the period to send  the data in seconds, 60 is default

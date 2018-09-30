@@ -3,4 +3,5 @@ rootProject.name = 'iot'
 include ':data',
         ':receive-api',
         ':stream-consumer',
-        ':statistics-api'
+        ':statistics-api',
+        ':qa:load'

@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+group = 'me.vsadokhin.iot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+test.enabled = project.hasProperty("qa-tests")
+
+test {
+   systemProperties = System.properties as Map<String, ?>
+}
+
+dependencies {
+  compile project(':data')
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.springframework:spring-web:5.1.0.RELEASE'
+  testCompile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+}
