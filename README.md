@@ -49,7 +49,7 @@ Perform а GET request to localhost:8081/statistics with **getStatisticsUser** a
 **aggregator** is required, supported values: min, max, avg  
 **type** is optional, specify to aggregate by type    
 **sensorId** is optional, specify to aggregate by sensorId  
-**from** is required, milliseconds for timeframe start, must be lower than **to**
+**from** is required, milliseconds for timeframe start, must be lower than **to**  
 **to** is required, milliseconds for timeframe stop, must be greater than **from**    
 
 Either **type** or **sensorId** must be specified with a single value, multiple types/sensorIds won't be processed by the API.
