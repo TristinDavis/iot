@@ -92,6 +92,15 @@ public class KafkaConsumerConfigTest {
     }
 
     @Test
+    public void consumerConfigs_checkEnableAutoCommitConfigKey() {
+        // act
+        Map result = kafkaConsumerConfig.consumerConfigs();
+
+        // verify
+        assertThat(result.get(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG), is(false));
+    }
+
+    @Test
     public void consumerFactory_checkResult() throws Exception {
         // setup
         Map mockMap = mock(Map.class);
@@ -143,7 +152,7 @@ public class KafkaConsumerConfigTest {
     }
 
     @Test
-    public void sensorRepository() throws Exception {
+    public void metricRepository() throws Exception {
         // setup
         MetricRepository mockMetricRepository = mock(MetricRepository.class);
         whenNew(MetricRepository.class).withNoArguments().thenReturn(mockMetricRepository);

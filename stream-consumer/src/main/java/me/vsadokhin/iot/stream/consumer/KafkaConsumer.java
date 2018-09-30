@@ -5,6 +5,7 @@ import me.vsadokhin.iot.data.MetricTable;
 import me.vsadokhin.iot.data.domain.Metric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,9 +19,11 @@ public class KafkaConsumer {
     }
 
     @KafkaListener(topics = "metric", groupId = "stream")
-    public void processMessage(Metric metric) {
-        metricRepository.insert(metric, MetricTable.METRIC_BY_SENSOR);
-        metricRepository.insert(metric, MetricTable.METRIC_BY_TYPE);
+    public void processMessage(Metric metric, Acknowledgment acknowledgment) {
+        for (MetricTable metricTable : MetricTable.values()) {
+            metricRepository.insert(metric, metricTable);
+        }
+        acknowledgment.acknowledge();
     }
 
 }
