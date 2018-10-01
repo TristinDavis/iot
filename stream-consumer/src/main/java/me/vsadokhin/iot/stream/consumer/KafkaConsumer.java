@@ -18,7 +18,7 @@ public class KafkaConsumer {
         this.metricRepository = metricRepository;
     }
 
-    @KafkaListener(id = "metric-listener", topics = "metric", groupId = "stream", errorHandler = "metricListenerErrorHandler")
+    @KafkaListener(id = "metric-listener", topics = "metric", groupId = "stream", errorHandler = "errorHandler")
     public void processMessage(Metric metric, Acknowledgment acknowledgment) {
         for (MetricTable metricTable : MetricTable.values()) {
             metricRepository.insert(metric, metricTable);
