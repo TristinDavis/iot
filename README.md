@@ -21,6 +21,7 @@ Execute from the root folder to build modules and start everything in docker:
 ```bash
 ./run.sh
 ```
+<sup>Note that I have not got a chance to test it in windows environment (Docker rejects installing on my Windows Home edition). But scripts work well on my Linux Debian and Mac OS. Contact me if you have a problem with running.<sup>
  
 ## How to access the service 
 ### Create metric
