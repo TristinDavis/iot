@@ -1,12 +1,10 @@
 # iot
 
 ## Conceptual model 
-Load Balancer 1 <-> Receive Cluster -> Broker/streaming -> Consumers Cluster -> Storage
-
-Load Balancer 2 <-> Reading Cluster <-> Storage
+![Load Balancer 1 <-> Receive Cluster -> Broker/streaming -> Consumers Cluster -> Storage <- Reading Cluster <- Load Balancer 2](https://github.com/vsadokhin/iot/raw/master/Conceptual%20Model.jpg "Conceptual Model")
 
 ## Implementation
-*receive-api*, *statistics-api*, *stream-consumer* are java applications. First two are web applications to create metric and get statistics. Being packed in docker they can be scaled, for instance, in AWS ECS on production.
+*receive-api*, *statistics-api*, *stream-consumer* are java applications. First two are web applications to create metric and get statistics. *stream-consumer* receives metrics from streaming broker and put them into storage. Being packed in docker they can be scaled, for instance, in AWS ECS on production.
 
 *data* module encapsulates read/write feature with storage. It is used by *stream-consumer* to write and *statistics-api* to query statistics.
 
