@@ -3,6 +3,7 @@ package me.vsadokhin.iot.qa.receive.api;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class ReceiveMetricTest {
         HttpEntity<Metric> entity = new HttpEntity<>(metric, HEADERS);
 
         // act
-        ResponseEntity<ResponseEntity> result = REST_TEMPLATE.exchange("http://localhost:8080/metric", HttpMethod.POST, entity, ResponseEntity.class);
+        ResponseEntity<String> result = REST_TEMPLATE.exchange("http://localhost:8080/metric", HttpMethod.POST, entity, String.class);
 
         // verify
         assertThat(result.getStatusCode(), is(HttpStatus.ACCEPTED));
@@ -146,11 +147,12 @@ public class ReceiveMetricTest {
         HttpEntity<Metric> entity = new HttpEntity<>(metric, HEADERS);
         try {
             // act
-            REST_TEMPLATE.exchange("http://localhost:8080/metric", HttpMethod.POST, entity, ResponseEntity.class);
+            REST_TEMPLATE.exchange("http://localhost:8080/metric", HttpMethod.POST, entity, String.class);
             // verify
             fail();
         } catch (HttpClientErrorException e) {
             assertThat(e.getRawStatusCode(), is(HttpStatus.BAD_REQUEST.value()));
+            assertThat(e.getResponseBodyAsString(), containsString("NotNull"));
         }
         waitNoMetricInDB(metric);
     }

@@ -5,4 +5,5 @@ include ':data',
         ':stream-consumer',
         ':statistics-api',
         ':qa:load',
-        ':qa:receive-api'
+        ':qa:receive-api',
+        ':qa:statistics-api'
