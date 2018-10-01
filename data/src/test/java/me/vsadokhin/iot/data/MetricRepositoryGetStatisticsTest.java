@@ -25,10 +25,11 @@ import org.junit.Test;
 public class MetricRepositoryGetStatisticsTest {
 
     private static final MetricRepository METRIC_REPOSITORY = new MetricRepository();
+    
     private GetStatisticsRequest getStatisticsRequest;
 
     @BeforeClass
-    public static  void beforeClass() {
+    public static void beforeClass() {
         Session session = CassandraSessionUtility.getSession();
         for (MetricTable metricTable : MetricTable.values()) {
             session.execute(QueryBuilder.truncate(metricTable.getTable()));
@@ -36,43 +37,43 @@ public class MetricRepositoryGetStatisticsTest {
 
         List<Metric> metrics = new ArrayList<>();
         metrics.add(new MetricBuilder("sensor1","type1")
-                .setWhen(1).setValue(Float.MAX_VALUE)
+                .setWhen(1L).setValue(Float.MAX_VALUE)
                 .build());
 
         metrics.add(new MetricBuilder("sensor2","type1")
-                .setWhen(1).setValue(Float.MIN_VALUE)
+                .setWhen(1L).setValue(Float.MIN_VALUE)
                 .build());
 
         metrics.add(new MetricBuilder("sensor1","type1")
-                .setWhen(2).setValue(1F)
+                .setWhen(2L).setValue(1F)
                 .build());
 
         metrics.add(new MetricBuilder("sensor2","type1")
-                .setWhen(2).setValue(0.1F)
+                .setWhen(2L).setValue(0.1F)
                 .build());
 
         metrics.add(new MetricBuilder("sensor3","type2")
-                .setWhen(2).setValue(Float.MIN_VALUE)
+                .setWhen(2L).setValue(Float.MIN_VALUE)
                 .build());
 
         metrics.add(new MetricBuilder("sensor4","type2")
-                .setWhen(2).setValue(Float.MAX_VALUE)
+                .setWhen(2L).setValue(Float.MAX_VALUE)
                 .build());
 
         metrics.add(new MetricBuilder("sensor1","type1")
-                .setWhen(3).setValue(0.2F)
+                .setWhen(3L).setValue(0.2F)
                 .build());
 
         metrics.add(new MetricBuilder("sensor2","type1")
-                .setWhen(3).setValue(0.3F)
+                .setWhen(3L).setValue(0.3F)
                 .build());
 
         metrics.add(new MetricBuilder("sensor1","type1")
-                .setWhen(4).setValue(Float.MIN_VALUE)
+                .setWhen(4L).setValue(Float.MIN_VALUE)
                 .build());
 
         metrics.add(new MetricBuilder("sensor2","type1")
-                .setWhen(4).setValue(Float.MAX_VALUE)
+                .setWhen(4L).setValue(Float.MAX_VALUE)
                 .build());
 
         for (Metric metric : metrics) {

@@ -7,6 +7,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.PlainTextAuthProvider;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -15,6 +16,13 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(CassandraConfig.class)
 public class CassandraConfigTest {
+
+    @AfterClass
+    public static void afterClass() {
+        System.clearProperty("cassandra.contact.points");
+        System.clearProperty("cassandra.username");
+        System.clearProperty("cassandra.password");
+    }
 
     @Test
     public void getKeyspaceName() {
@@ -59,6 +67,8 @@ public class CassandraConfigTest {
     @Test
     public void getAuthProvider() throws Exception {
         // setup
+        System.clearProperty("cassandra.username");
+        System.clearProperty("cassandra.password");
         PlainTextAuthProvider mockPlainTextAuthProvider = mock(PlainTextAuthProvider.class);
         whenNew(PlainTextAuthProvider.class).withArguments("cassandra", "cassandra").thenReturn(mockPlainTextAuthProvider);
 
