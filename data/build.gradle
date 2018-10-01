@@ -1,28 +1,9 @@
-apply plugin: 'java'
-
 group = 'me.vsadokhin.iot'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-repositories {
-  mavenCentral()
-}
-
-def powermock_version = "1.7.4"
-def mockito_version = "1.10.19"
 
 dependencies {
   compile 'com.datastax.cassandra:cassandra-driver-core:3.6.0'
   compile 'org.hibernate:hibernate-validator:6.0.13.Final'
 
-  testCompile 'junit:junit:4.12'
-  testCompile("org.powermock:powermock-module-junit4:${powermock_version}") {
-    exclude module: "junit"
-    exclude module: "mockito-core"
-  }
-  testCompile("org.powermock:powermock-api-mockito:${powermock_version}") {
-    exclude module: "mockito-all"
-    exclude module: "mockito-core"
-  }
-  testCompile "org.mockito:mockito-core:${mockito_version}"
+  testCompile libs.powermock_junit
 }

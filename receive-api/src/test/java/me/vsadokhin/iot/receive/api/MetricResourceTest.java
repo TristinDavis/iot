@@ -1,6 +1,6 @@
 package me.vsadokhin.iot.receive.api;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;

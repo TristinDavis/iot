@@ -1,2 +1,45 @@
 group 'me.vsadokhin.iot'
 version '0.0.1-SNAPSHOT'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+
+subprojects {
+  apply plugin: 'java'
+
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+
+  test {
+    ignoreFailures = true
+    testLogging.showStandardStreams = false
+  }
+  
+}
+
+def powermock_version = "1.7.4"
+def mockito_version = "1.10.19"
+def junit_version = "4.12"
+
+ext.libs = [
+        powermock_junit: [
+                dependencies.create("junit:junit:${junit_version}"),
+                dependencies.create("org.powermock:powermock-module-junit4:${powermock_version}") {
+                  exclude module: "junit"
+                  exclude module: "mockito-core"
+                },
+                dependencies.create("org.powermock:powermock-api-mockito:${powermock_version}") {
+                  exclude module: "mockito-all"
+                  exclude module: "mockito-core"
+                },
+                "org.mockito:mockito-core:${mockito_version}",
+        ]
+]

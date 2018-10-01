@@ -1,6 +1,6 @@
 package me.vsadokhin.iot.statistics.api;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
