@@ -136,6 +136,12 @@ public class SimulateSimultaneouslyMetricsTest {
         int tenSecondsTimeout = 10000;
         long count = 0;
         while (System.currentTimeMillis() - startTime < tenSecondsTimeout) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             ResultSet resultSet = SESSION.execute("SELECT COUNT(*) as count FROM " + table);
             Row row = resultSet.iterator().next();
             count = row.getLong("count");
