@@ -4,7 +4,7 @@
 ![Load Balancer 1 <-> Receive Cluster -> Broker/streaming -> Consumers Cluster -> Storage <- Reading Cluster <- Load Balancer 2](https://github.com/vsadokhin/iot/raw/master/Conceptual%20Model.jpg "Conceptual Model")
 
 ## Implementation
-*receive-api*, *statistics-api*, *stream-consumer* are java applications. First two are web applications to create metric and get statistics. *stream-consumer* receives metrics from streaming broker and put them into storage. Being packed in docker they can be scaled, for instance, in AWS ECS on production.
+*receive-api*, *statistics-api*, *stream-consumer* are java applications. First two are web applications to create metric and get statistics. *stream-consumer* receives metrics from a message broker and put them into a storage. Being packed in docker they can be scaled, for instance, in AWS ECS on production.
 
 *data* module encapsulates read/write feature with storage. It is used by *stream-consumer* to write and *statistics-api* to query statistics.
 
@@ -37,8 +37,9 @@ All fields are required. Content type has to be application/json.
 
 The request can be made with curl:
 ```bash
-curl -XPOST -d '{"sensorId":"s2", "type":"t1", "when":"1538139260752", "value":1.1}' -H "Content-Type: application/json" localhost:8080/metric
+curl -v -XPOST -d '{"sensorId":"s2", "type":"t1", "when":"1538139260752", "value":1.1}' -H "Content-Type: application/json" localhost:8080/metric
 ```
+If everything works fine expected response will be with status 202 Accepted and empty body.
 
 ### Get statistics
 
@@ -103,3 +104,18 @@ If in-transfer security is important it can be achieved with SSL certificates an
 It seems to me that Cassandra does not provide in-rest encryption out of the box, but [people say it can be done one way or another](https://stackoverflow.com/questions/47046285/encrypting-the-database-at-rest-without-paying). 
   
 Also, going with AWS-based solution, there might be IAM Roles properly configured (not) to provide an access to different model components.
+
+## How to clean environment
+Run from the root folder to stop containers and remove related images:
+```bash
+./clean.sh
+```
+Note that it will remove images from your box: zookeeper:3.4 anapsix/alpine-java:8 ches/kafka:latest cassandra:3.11.3  
+If you need one of them, please, do clean up manually instead.
+
+If you just want to stop containers run from the root folder:
+```bash
+./stop.sh
+```
+
+If you do not use Gradle feel free to delete "*.Gradle*" folder from your home directory. Otherwise, clean it manually if you like.
