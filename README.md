@@ -82,7 +82,7 @@ Current metric is hardcoded with the float type, which might not be sufficient i
 ### Readings
 Only min, max, avg are implemented. Median or other percentile statistics can be implemented with [custom aggregate functions](https://stackoverflow.com/questions/52528838/how-to-get-x-percentile-in-cassandra).
     
-Readings are only provided either by one *type* or one *sensorId*. Also, *To* and *From* has belongs to the same day for reading by *type* or to the same week for reading by *sensorId*. Those limitations are subject to change depending on production cases.
+Readings are only provided either by one *type* or one *sensorId*. Also, *To* and *From* has to belong to the same day for reading by *type* or to the same week for reading by *sensorId*. Those limitations are subject to change depending on production cases.
 
 *Milliseconds* can be fine for robots but it is still not human readable and not convenient format. I would change it to be a formatted date string like *yyyy-MM-dd HH:mm:ss.SSSZ* or even to support multiple formats.
    
