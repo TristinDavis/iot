@@ -67,7 +67,7 @@ Run from the root folder:
 ./gradlew -i :qa:load:test -Pqa-tests -Dsimultaneous.metrics=3 -Dduration=60
 ```
 **simultaneous.metrics** is the number of metrics has to be sent, 3 is default
-**duration** determines determines the period to send  the data in seconds, 60 is default
+**duration** determines the period to send  the data in seconds, 60 is default
 
 The test will fail if count of metrics doesn't match with **simultaneous.metrics** * **duration** at the end.
 The reading API is not checked in this test, feel free to query manually.     
