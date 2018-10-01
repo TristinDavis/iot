@@ -13,12 +13,12 @@ public class MetricBuilder {
         metric.setType(type);
     }
 
-    public MetricBuilder setValue(float value) {
+    public MetricBuilder setValue(Float value) {
         metric.setValue(value);
         return this;
     }
 
-    public MetricBuilder setWhen(long when) {
+    public MetricBuilder setWhen(Long when) {
         metric.setWhen(when);
         return this;
     }

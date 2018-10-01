@@ -32,19 +32,19 @@ public class Metric {
         this.type = type;
     }
 
-    public long getWhen() {
+    public Long getWhen() {
         return when;
     }
 
-    public void setWhen(long when) {
+    public void setWhen(Long when) {
         this.when = when;
     }
 
-    public float getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 
